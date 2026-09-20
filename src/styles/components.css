@@ -1131,3 +1131,309 @@ button.task-check {
   font-size: 12px;
   line-height: 1.5;
 }
+
+/* ============================= */
+/* CATEGORIES PAGE               */
+/* ============================= */
+
+.categories-page {
+  width: 100%;
+}
+
+.categories-add-button {
+  width: 100%;
+}
+
+
+/* ============================= */
+/* CATEGORIES SUMMARY            */
+/* ============================= */
+
+.categories-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 14px;
+
+  margin-bottom: 34px;
+}
+
+.category-summary-card {
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+
+  box-shadow:
+    0 4px 18px rgba(25, 35, 55, 0.04);
+}
+
+.category-summary-label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.category-summary-card strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #172033;
+
+  font-size: 26px;
+}
+
+.category-summary-card p {
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ============================= */
+/* SECTION HEADER                */
+/* ============================= */
+
+.categories-section-header {
+  margin-bottom: 17px;
+}
+
+.categories-section-header h3 {
+  color: #172033;
+
+  font-size: 20px;
+}
+
+.categories-section-header p {
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+
+/* ============================= */
+/* CATEGORIES GRID               */
+/* ============================= */
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 16px;
+}
+
+
+/* ============================= */
+/* CATEGORY CARD                 */
+/* ============================= */
+
+.category-card {
+  padding: 19px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+
+  box-shadow:
+    0 4px 18px rgba(25, 35, 55, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(25, 35, 55, 0.08);
+}
+
+
+/* ============================= */
+/* CATEGORY HEADER               */
+/* ============================= */
+
+.category-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 17px;
+}
+
+.category-icon {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 13px;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.category-icon.development {
+  background: #e9e8ff;
+  color: #5b5be8;
+}
+
+.category-icon.mathematics {
+  background: #fff2d8;
+  color: #c67c00;
+
+  font-size: 22px;
+}
+
+.category-icon.programming {
+  background: #ddf8ec;
+  color: #168b5e;
+}
+
+.category-icon.university {
+  background: #e2f1ff;
+  color: #2978b5;
+}
+
+.category-icon.personal {
+  background: #ffe7ee;
+  color: #c94c70;
+}
+
+.category-options-button {
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #94a3b8;
+
+  font-size: 20px;
+
+  transition: 0.2s ease;
+}
+
+.category-options-button:hover {
+  background: #f5f7fb;
+  color: #5b5be8;
+}
+
+
+/* ============================= */
+/* CATEGORY CONTENT              */
+/* ============================= */
+
+.category-card-content {
+  margin-bottom: 20px;
+}
+
+.category-card-content h3 {
+  margin-bottom: 6px;
+
+  color: #172033;
+
+  font-size: 17px;
+}
+
+.category-card-content p {
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* ============================= */
+/* CATEGORY STATS                */
+/* ============================= */
+
+.category-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.category-stats > div {
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background: #f8f9fc;
+}
+
+.category-stats span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+.category-stats strong {
+  color: #172033;
+
+  font-size: 17px;
+}
+
+
+/* ============================= */
+/* PROGRESS                      */
+/* ============================= */
+
+.category-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.category-progress-header strong {
+  color: #5050d5;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 7px;
+
+  overflow: hidden;
+
+  border-radius: 50px;
+
+  background: #edf0f5;
+}
+
+.progress-value {
+  height: 100%;
+
+  border-radius: 50px;
+
+  background: #5b5be8;
+}
