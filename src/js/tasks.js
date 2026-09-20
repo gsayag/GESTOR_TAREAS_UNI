@@ -138,3 +138,9 @@ export function deleteTask(taskId) {
   return true
 }
 
+export function clearAllTasks() {
+  tasks = []
+
+  saveTasksToStorage(tasks)
+}
+

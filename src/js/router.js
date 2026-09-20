@@ -6,7 +6,10 @@ import {
 import { agendaView } from './views/agendaView.js'
 import { categoriesView } from './views/categoriesView.js'
 import { statsView } from './views/statsView.js'
-import { settingsView } from './views/settingsView.js'
+import {
+  settingsView,
+  initSettingsView
+} from './views/settingsView.js'
 
 
 const pageTitles = {
@@ -103,5 +106,8 @@ function renderPage(page) {
   if (page === 'tasks') {
     initTasksView()
   }
+  if (page === 'settings') {
+  initSettingsView()
+}
 
 }

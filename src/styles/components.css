@@ -2289,3 +2289,202 @@ button.task-check {
   font-size: 12px;
   line-height: 1.6;
 }
+
+
+
+/* ============================= */
+/* TOAST NOTIFICATIONS           */
+/* ============================= */
+
+.toast-container {
+  position: fixed;
+
+  top: 18px;
+  right: 18px;
+
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  pointer-events: none;
+}
+
+.app-toast {
+  min-width: 220px;
+  max-width: 340px;
+
+  padding: 13px 16px;
+
+  border-radius: 11px;
+
+  background: #172033;
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  box-shadow:
+    0 10px 35px rgba(15, 23, 42, 0.18);
+
+  opacity: 0;
+
+  transform: translateY(-10px);
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.app-toast.toast-visible {
+  opacity: 1;
+
+  transform: translateY(0);
+}
+
+.app-toast.success {
+  background: #168b5e;
+}
+
+.app-toast.error {
+  background: #d84444;
+}
+
+.app-toast.info {
+  background: #5050d5;
+}
+
+.settings-save-button {
+  width: 100%;
+
+  margin-top: 18px;
+}
+
+/* ============================= */
+/* COMPACT MODE                  */
+/* ============================= */
+
+body.compact-mode .task-card,
+body.compact-mode .summary-card,
+body.compact-mode .category-card,
+body.compact-mode .settings-card,
+body.compact-mode .stats-panel,
+body.compact-mode .agenda-event-card {
+  padding: 12px;
+}
+
+body.compact-mode .task-list,
+body.compact-mode .categories-grid,
+body.compact-mode .settings-layout {
+  gap: 9px;
+}
+
+
+
+/* ============================= */
+/* DARK MODE                     */
+/* ============================= */
+
+body.dark-mode {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+body.dark-mode .main-container {
+  background: #111827;
+}
+
+body.dark-mode .header,
+body.dark-mode .sidebar,
+body.dark-mode .mobile-nav {
+  background: #18212f;
+
+  border-color: #2b3647;
+}
+
+
+body.dark-mode .header h2,
+body.dark-mode .sidebar-logo h1,
+body.dark-mode .welcome-section h2,
+body.dark-mode .page-heading h2,
+body.dark-mode .section-header h3,
+body.dark-mode .tasks-results-header h3,
+body.dark-mode .task-info h4,
+body.dark-mode .category-card-content h3,
+body.dark-mode .categories-section-header h3,
+body.dark-mode .stats-panel-header h3,
+body.dark-mode .settings-card-header h3,
+body.dark-mode .agenda-event-card h4,
+body.dark-mode .agenda-section-header h3,
+body.dark-mode .agenda-calendar-header h3 {
+  color: #f1f5f9;
+}
+
+
+body.dark-mode .summary-card,
+body.dark-mode .task-card,
+body.dark-mode .agenda-calendar,
+body.dark-mode .agenda-event-card,
+body.dark-mode .category-card,
+body.dark-mode .category-summary-card,
+body.dark-mode .stats-summary-card,
+body.dark-mode .stats-panel,
+body.dark-mode .settings-card,
+body.dark-mode .settings-about,
+body.dark-mode .search-box,
+body.dark-mode .tasks-empty-state {
+  background: #18212f;
+
+  border-color: #2b3647;
+}
+
+
+body.dark-mode .summary-card strong,
+body.dark-mode .category-summary-card strong,
+body.dark-mode .category-stats strong,
+body.dark-mode .stats-summary-card strong,
+body.dark-mode .progress-info-row strong,
+body.dark-mode .weekly-stat strong,
+body.dark-mode .settings-about strong {
+  color: #f1f5f9;
+}
+
+
+body.dark-mode .category-stats > div,
+body.dark-mode .weekly-stat,
+body.dark-mode .data-info,
+body.dark-mode .notification-button {
+  background: #202b3b;
+}
+
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea,
+body.dark-mode .form-group select {
+  background: #202b3b;
+
+  border-color: #344154;
+
+  color: #f1f5f9;
+}
+
+
+body.dark-mode .task-modal {
+  background: #18212f;
+}
+
+
+body.dark-mode .progress-circle-inner {
+  background: #18212f;
+}
+
+
+body.dark-mode .secondary-button {
+  background: #202b3b;
+
+  border-color: #344154;
+
+  color: #d1d5db;
+}

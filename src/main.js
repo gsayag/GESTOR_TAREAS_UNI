@@ -3,6 +3,10 @@ import './styles/components.css'
 import './styles/responsive.css'
 import { initRouter } from './js/router.js'
 
+import {
+  applySettings
+} from './js/settings.js'
+
 const app = document.querySelector('#app')
 
 app.innerHTML = `
@@ -149,5 +153,7 @@ app.innerHTML = `
 
   </div>
 `
+
+applySettings()
 
 initRouter()

@@ -1,4 +1,20 @@
+import {
+  getSettings,
+  updateSettings,
+  resetSettings
+} from '../settings.js'
+
+import {
+  clearAllTasks
+} from '../tasks.js'
+
+import {
+  showToast
+} from '../ui.js'
+
 export function settingsView() {
+  const settings = getSettings()
+
   return `
     <section class="settings-page">
 
@@ -24,7 +40,10 @@ export function settingsView() {
       <div class="settings-layout">
 
 
+        <!-- ============================= -->
         <!-- PERFIL -->
+        <!-- ============================= -->
+
         <section class="settings-card">
 
           <div class="settings-card-header">
@@ -55,7 +74,7 @@ export function settingsView() {
               <input
                 type="text"
                 id="settings-name"
-                value="Usuario"
+                value="${settings.name}"
                 placeholder="Tu nombre"
               >
 
@@ -71,7 +90,7 @@ export function settingsView() {
               <input
                 type="email"
                 id="settings-email"
-                value="usuario@universidad.edu.pe"
+                value="${settings.email}"
                 placeholder="correo@ejemplo.com"
               >
 
@@ -79,10 +98,25 @@ export function settingsView() {
 
           </div>
 
+
+          <!-- BOTÓN GUARDAR PERFIL -->
+
+          <button
+            type="button"
+            class="primary-button settings-save-button"
+            id="save-profile-button"
+          >
+            Guardar cambios
+          </button>
+
         </section>
 
 
+
+        <!-- ============================= -->
         <!-- APARIENCIA -->
+        <!-- ============================= -->
+
         <section class="settings-card">
 
           <div class="settings-card-header">
@@ -122,6 +156,7 @@ export function settingsView() {
               <input
                 type="checkbox"
                 id="dark-mode-toggle"
+                ${settings.darkMode ? 'checked' : ''}
               >
 
               <span class="switch-slider"></span>
@@ -151,6 +186,7 @@ export function settingsView() {
               <input
                 type="checkbox"
                 id="compact-mode-toggle"
+                ${settings.compactMode ? 'checked' : ''}
               >
 
               <span class="switch-slider"></span>
@@ -162,7 +198,11 @@ export function settingsView() {
         </section>
 
 
-        <!-- NOTIFICACIONES -->
+
+        <!-- ============================= -->
+        <!-- RECORDATORIOS -->
+        <!-- ============================= -->
+
         <section class="settings-card">
 
           <div class="settings-card-header">
@@ -181,6 +221,8 @@ export function settingsView() {
 
           </div>
 
+
+          <!-- RECORDATORIO DE TAREAS PENDIENTES -->
 
           <div class="setting-option">
 
@@ -202,7 +244,8 @@ export function settingsView() {
 
               <input
                 type="checkbox"
-                checked
+                id="pending-reminders-toggle"
+                ${settings.pendingReminders ? 'checked' : ''}
               >
 
               <span class="switch-slider"></span>
@@ -211,6 +254,8 @@ export function settingsView() {
 
           </div>
 
+
+          <!-- RECORDATORIO DE FECHAS -->
 
           <div class="setting-option">
 
@@ -231,7 +276,8 @@ export function settingsView() {
 
               <input
                 type="checkbox"
-                checked
+                id="due-date-reminders-toggle"
+                ${settings.dueDateReminders ? 'checked' : ''}
               >
 
               <span class="switch-slider"></span>
@@ -243,7 +289,11 @@ export function settingsView() {
         </section>
 
 
+
+        <!-- ============================= -->
         <!-- DATOS -->
+        <!-- ============================= -->
+
         <section class="settings-card">
 
           <div class="settings-card-header">
@@ -279,7 +329,7 @@ export function settingsView() {
 
 
             <p>
-              Tus tareas se almacenarán en este dispositivo
+              Tus tareas se almacenan en este dispositivo
               mediante localStorage.
             </p>
 
@@ -299,7 +349,11 @@ export function settingsView() {
       </div>
 
 
+
+      <!-- ============================= -->
       <!-- INFORMACIÓN -->
+      <!-- ============================= -->
+
       <section class="settings-about">
 
         <div>
@@ -331,4 +385,197 @@ export function settingsView() {
 
     </section>
   `
+}
+
+export function initSettingsView() {
+  const nameInput =
+    document.querySelector(
+      '#settings-name'
+    )
+
+  const emailInput =
+    document.querySelector(
+      '#settings-email'
+    )
+
+  const saveProfileButton =
+    document.querySelector(
+      '#save-profile-button'
+    )
+
+  const darkModeToggle =
+    document.querySelector(
+      '#dark-mode-toggle'
+    )
+
+  const compactModeToggle =
+    document.querySelector(
+      '#compact-mode-toggle'
+    )
+
+  const pendingRemindersToggle =
+    document.querySelector(
+      '#pending-reminders-toggle'
+    )
+
+  const dueDateRemindersToggle =
+    document.querySelector(
+      '#due-date-reminders-toggle'
+    )
+
+  const clearDataButton =
+    document.querySelector(
+      '#clear-data-button'
+    )
+
+
+  // =============================
+  // PERFIL
+  // =============================
+
+  saveProfileButton?.addEventListener(
+    'click',
+    () => {
+
+      const name =
+        nameInput.value.trim()
+
+      const email =
+        emailInput.value.trim()
+
+
+      if (name.length < 2) {
+        showToast(
+          'Ingresa un nombre válido.',
+          'error'
+        )
+
+        return
+      }
+
+
+      if (
+        !email ||
+        !email.includes('@')
+      ) {
+        showToast(
+          'Ingresa un correo válido.',
+          'error'
+        )
+
+        return
+      }
+
+
+      updateSettings({
+        name,
+        email
+      })
+
+
+      showToast(
+        'Perfil actualizado correctamente.'
+      )
+
+    }
+  )
+
+
+  // =============================
+  // MODO OSCURO
+  // =============================
+
+  darkModeToggle?.addEventListener(
+    'change',
+    () => {
+
+      updateSettings({
+        darkMode:
+          darkModeToggle.checked
+      })
+
+    }
+  )
+
+
+  // =============================
+  // MODO COMPACTO
+  // =============================
+
+  compactModeToggle?.addEventListener(
+    'change',
+    () => {
+
+      updateSettings({
+        compactMode:
+          compactModeToggle.checked
+      })
+
+    }
+  )
+
+
+  // =============================
+  // RECORDATORIOS
+  // =============================
+
+  pendingRemindersToggle?.addEventListener(
+    'change',
+    () => {
+
+      updateSettings({
+        pendingReminders:
+          pendingRemindersToggle.checked
+      })
+
+    }
+  )
+
+
+  dueDateRemindersToggle?.addEventListener(
+    'change',
+    () => {
+
+      updateSettings({
+        dueDateReminders:
+          dueDateRemindersToggle.checked
+      })
+
+    }
+  )
+
+
+  // =============================
+  // BORRAR DATOS
+  // =============================
+
+  clearDataButton?.addEventListener(
+    'click',
+    () => {
+
+      const confirmed =
+        window.confirm(
+          '¿Seguro que deseas eliminar todas las tareas y restablecer los ajustes?'
+        )
+
+
+      if (!confirmed) return
+
+
+      clearAllTasks()
+
+      resetSettings()
+
+
+      showToast(
+        'Datos eliminados correctamente.'
+      )
+
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 600)
+
+    }
+  )
 }

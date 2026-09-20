@@ -769,3 +769,18 @@
   }
 
 }
+
+@media (max-width: 649px) {
+
+  .toast-container {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .app-toast {
+    width: 100%;
+    max-width: none;
+  }
+
+}

@@ -7,6 +7,8 @@ import {
   deleteTask
 } from '../tasks.js'
 
+import { showToast } from '../ui.js'
+
 let editingTaskId = null
 let currentFilter = 'all'
 let currentSearch = ''
@@ -580,12 +582,23 @@ export function initTasksView() {
 
     // COMPLETAR / REABRIR
     if (action === 'toggle') {
-      toggleTaskCompleted(taskId)
+  const updatedTask =
+    toggleTaskCompleted(taskId)
 
-      refreshTasksView()
+  refreshTasksView()
 
-      return
-    }
+
+  if (updatedTask) {
+    showToast(
+      updatedTask.completed
+        ? 'Tarea marcada como completada.'
+        : 'Tarea marcada como pendiente.',
+      'info'
+    )
+  }
+
+  return
+}
 
 
     // EDITAR
@@ -609,6 +622,10 @@ export function initTasksView() {
       deleteTask(taskId)
 
       refreshTasksView()
+
+      showToast(
+        'Tarea eliminada correctamente.'
+      )
     }
   })
   
@@ -619,48 +636,111 @@ export function initTasksView() {
   // =============================
 
   taskForm?.addEventListener('submit', (event) => {
-    event.preventDefault()
+  event.preventDefault()
 
-    const formData = new FormData(taskForm)
-
-
-    const taskData = {
-      title: formData.get('title').trim(),
-
-      description:
-        formData.get('description').trim(),
-
-      category:
-        formData.get('category'),
-
-      priority:
-        formData.get('priority'),
-
-      date:
-        formData.get('date')
-    }
+  const formData = new FormData(taskForm)
 
 
-    // EDITAR
-    if (editingTaskId !== null) {
-      updateTask(
-        editingTaskId,
-        taskData
-      )
-    }
+  const taskData = {
+    title:
+      formData.get('title').trim(),
 
-    // CREAR
-    else {
-      addTask(taskData)
-    }
+    description:
+      formData.get('description').trim(),
+
+    category:
+      formData.get('category'),
+
+    priority:
+      formData.get('priority'),
+
+    date:
+      formData.get('date')
+  }
 
 
-    refreshTasksView()
+  // =============================
+  // VALIDACIONES
+  // =============================
 
-    resetTaskFormMode()
+  if (taskData.title.length < 3) {
+    showToast(
+      'El título debe tener al menos 3 caracteres.',
+      'error'
+    )
 
-    modal.close()
-  })
+    return
+  }
+
+
+  if (!taskData.category) {
+    showToast(
+      'Selecciona una categoría.',
+      'error'
+    )
+
+    return
+  }
+
+
+  if (!taskData.priority) {
+    showToast(
+      'Selecciona una prioridad.',
+      'error'
+    )
+
+    return
+  }
+
+
+  if (!taskData.date) {
+    showToast(
+      'Selecciona una fecha límite.',
+      'error'
+    )
+
+    return
+  }
+
+
+  const isEditing =
+    editingTaskId !== null
+
+
+  // =============================
+  // EDITAR
+  // =============================
+
+  if (isEditing) {
+    updateTask(
+      editingTaskId,
+      taskData
+    )
+  }
+
+
+  // =============================
+  // CREAR
+  // =============================
+
+  else {
+    addTask(taskData)
+  }
+
+
+  refreshTasksView()
+
+  resetTaskFormMode()
+
+  modal.close()
+
+
+  showToast(
+    isEditing
+      ? 'Tarea actualizada correctamente.'
+      : 'Tarea creada correctamente.'
+  )
+})
 }
 
 
