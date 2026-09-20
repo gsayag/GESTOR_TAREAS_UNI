@@ -64,3 +64,15 @@ export function addTask(taskData) {
 
   return newTask
 }
+
+export function toggleTaskCompleted(taskId) {
+  const task = tasks.find(
+    (task) => task.id === taskId
+  )
+
+  if (!task) return null
+
+  task.completed = !task.completed
+
+  return task
+}

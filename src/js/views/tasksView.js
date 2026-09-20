@@ -1,6 +1,7 @@
 import {
   getTasks,
-  addTask
+  addTask,
+  toggleTaskCompleted
 } from '../tasks.js'
 
 function getPriorityLabel(priority) {
@@ -332,52 +333,108 @@ export function initTasksView() {
   const closeButton = document.querySelector('#close-task-modal')
   const cancelButton = document.querySelector('#cancel-task-button')
   const taskForm = document.querySelector('#task-form')
+  const taskList = document.querySelector('.task-list')
 
   if (!modal) return
+
+
+  // =============================
+  // ABRIR MODAL
+  // =============================
 
   newTaskButton?.addEventListener('click', () => {
     modal.showModal()
   })
 
-  closeButton?.addEventListener('click', () => {
-  taskForm?.reset()
 
-  modal.close()
-})
+  // =============================
+  // CERRAR CON X
+  // =============================
+
+  closeButton?.addEventListener('click', () => {
+    taskForm?.reset()
+
+    modal.close()
+  })
+
+
+  // =============================
+  // CERRAR CON CANCELAR
+  // =============================
 
   cancelButton?.addEventListener('click', () => {
-  taskForm?.reset()
+    taskForm?.reset()
 
-  modal.close()
-})
+    modal.close()
+  })
+
+
+  // =============================
+  // CERRAR HACIENDO CLIC FUERA
+  // =============================
 
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
+      taskForm?.reset()
+
       modal.close()
     }
   })
 
+
+  // =============================
+  // ACCIONES DE LAS TAREAS
+  // =============================
+
+  taskList?.addEventListener('click', (event) => {
+    const actionButton = event.target.closest(
+      '[data-action]'
+    )
+
+    if (!actionButton) return
+
+    const action = actionButton.dataset.action
+
+    const taskId = Number(
+      actionButton.dataset.taskId
+    )
+
+
+    // MARCAR COMO COMPLETADA O PENDIENTE
+    if (action === 'toggle') {
+      toggleTaskCompleted(taskId)
+
+      refreshTasksView()
+    }
+  })
+
+
+  // =============================
+  // CREAR NUEVA TAREA
+  // =============================
+
   taskForm?.addEventListener('submit', (event) => {
-  event.preventDefault()
+    event.preventDefault()
 
-  const formData = new FormData(taskForm)
+    const formData = new FormData(taskForm)
 
-  const taskData = {
-    title: formData.get('title').trim(),
-    description: formData.get('description').trim(),
-    category: formData.get('category'),
-    priority: formData.get('priority'),
-    date: formData.get('date')
-  }
+    const taskData = {
+      title: formData.get('title').trim(),
+      description: formData.get('description').trim(),
+      category: formData.get('category'),
+      priority: formData.get('priority'),
+      date: formData.get('date')
+    }
 
-  addTask(taskData)
 
-  refreshTasksView()
+    addTask(taskData)
 
-  taskForm.reset()
+    refreshTasksView()
 
-  modal.close()
-})
+    taskForm.reset()
+
+    modal.close()
+  })
 }
 
 
@@ -409,6 +466,8 @@ function createTaskCard(task) {
 
         <button
           class="${checkClass}"
+          data-action="toggle"
+          data-task-id="${task.id}"
           aria-label="${
             task.completed
               ? 'Marcar tarea como pendiente'
