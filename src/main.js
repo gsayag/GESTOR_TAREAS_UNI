@@ -97,27 +97,50 @@ app.innerHTML = `
     <!-- NAVEGACIÓN PARA CELULAR -->
     <nav class="mobile-nav">
 
-      <button class="mobile-nav-item active" data-page="home">
+      <button
+        class="mobile-nav-item active"
+        data-page="home"
+      >
         <span>⌂</span>
         <small>Inicio</small>
       </button>
 
-      <button class="mobile-nav-item" data-page="tasks">
+      <button
+        class="mobile-nav-item"
+        data-page="tasks"
+      >
         <span>✓</span>
         <small>Tareas</small>
       </button>
 
-      <button class="mobile-nav-item" data-page="agenda">
+      <button
+        class="mobile-nav-item"
+        data-page="agenda"
+      >
         <span>▣</span>
         <small>Agenda</small>
       </button>
 
-      <button class="mobile-nav-item" data-page="stats">
+      <button
+        class="mobile-nav-item"
+        data-page="categories"
+      >
+        <span>▦</span>
+        <small>Categorías</small>
+      </button>
+
+      <button
+        class="mobile-nav-item"
+        data-page="stats"
+      >
         <span>▥</span>
         <small>Progreso</small>
       </button>
 
-      <button class="mobile-nav-item" data-page="settings">
+      <button
+        class="mobile-nav-item"
+        data-page="settings"
+      >
         <span>⚙</span>
         <small>Ajustes</small>
       </button>

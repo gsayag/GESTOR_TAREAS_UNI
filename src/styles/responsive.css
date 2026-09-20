@@ -412,3 +412,148 @@
   }
 
 }
+
+/* ============================= */
+/* MOBILE POLISH                 */
+/* ============================= */
+
+@media (max-width: 649px) {
+
+  .header {
+    height: 66px;
+
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+
+  .header-subtitle {
+    font-size: 10px;
+  }
+
+
+  .notification-button,
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  .main-content {
+    padding:
+      20px
+      14px
+      100px;
+  }
+
+
+  .welcome-section h2 {
+    font-size: 25px;
+  }
+
+
+  .page-heading h2 {
+    font-size: 25px;
+  }
+
+
+  .summary-card {
+    padding: 15px;
+  }
+
+
+  .task-card {
+    padding: 15px;
+  }
+
+
+  .task-main {
+    gap: 11px;
+  }
+
+
+  .task-info h4 {
+    font-size: 15px;
+  }
+
+
+  .task-meta {
+    gap: 5px;
+  }
+
+
+  .task-actions {
+    width: 100%;
+  }
+
+
+  .task-action-button {
+    flex: 1;
+
+    text-align: center;
+  }
+
+
+  .agenda-calendar {
+    padding: 15px;
+  }
+
+
+  .agenda-days {
+    grid-template-columns:
+      repeat(7, minmax(52px, 1fr));
+  }
+
+
+  .agenda-event {
+    grid-template-columns:
+      48px 2px 1fr;
+
+    gap: 8px;
+  }
+
+
+  .agenda-event-time {
+    font-size: 9px;
+  }
+
+
+  .agenda-event-card {
+    padding: 13px;
+  }
+
+
+  .settings-card,
+  .stats-panel,
+  .category-card {
+    padding: 16px;
+  }
+
+
+  .task-modal {
+    width: calc(100% - 20px);
+
+    max-height: 92vh;
+  }
+
+
+  .task-modal-content {
+    padding: 20px 16px;
+  }
+
+
+  .mobile-nav {
+    height: 70px;
+
+    padding:
+      6px
+      4px
+      5px;
+  }
+
+}
