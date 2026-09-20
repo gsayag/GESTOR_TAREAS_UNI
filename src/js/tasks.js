@@ -1,4 +1,10 @@
-const tasks = [
+import {
+  loadTasksFromStorage,
+  saveTasksToStorage
+} from './storage.js'
+
+
+const defaultTasks = [
   {
     id: 1,
     title: 'Terminar proyecto web',
@@ -44,6 +50,19 @@ const tasks = [
   }
 ]
 
+const storedTasks = loadTasksFromStorage()
+
+
+let tasks =
+  storedTasks !== null
+    ? storedTasks
+    : defaultTasks.map((task) => ({ ...task }))
+
+
+if (storedTasks === null) {
+  saveTasksToStorage(tasks)
+}
+
 
 export function getTasks() {
   return tasks
@@ -62,6 +81,8 @@ export function addTask(taskData) {
 
   tasks.unshift(newTask)
 
+  saveTasksToStorage(tasks)
+
   return newTask
 }
 
@@ -73,6 +94,8 @@ export function toggleTaskCompleted(taskId) {
   if (!task) return null
 
   task.completed = !task.completed
+
+  saveTasksToStorage(tasks)
 
   return task
 }
@@ -96,6 +119,8 @@ export function updateTask(taskId, taskData) {
   task.priority = taskData.priority
   task.date = taskData.date
 
+  saveTasksToStorage(tasks)
+
   return task
 }
 
@@ -107,6 +132,8 @@ export function deleteTask(taskId) {
   if (taskIndex === -1) return false
 
   tasks.splice(taskIndex, 1)
+
+  saveTasksToStorage(tasks)
 
   return true
 }
