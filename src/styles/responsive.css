@@ -1,0 +1,208 @@
+/* ============================= */
+/* TABLET                        */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .main-content {
+    padding: 30px 30px 110px;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .welcome-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .primary-button {
+    width: auto;
+  }
+
+}
+
+
+/* ============================= */
+/* DESKTOP                       */
+/* ============================= */
+
+@media (min-width: 900px) {
+
+  .app-layout {
+    display: grid;
+
+    grid-template-columns: 250px 1fr;
+  }
+
+  .sidebar {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    position: sticky;
+    top: 0;
+
+    padding: 28px 18px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e9edf3;
+  }
+
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 40px;
+  }
+
+  .logo-box {
+    width: 43px;
+    height: 43px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: #5b5be8;
+    color: white;
+
+    font-weight: 800;
+  }
+
+  .sidebar-logo h1 {
+    font-size: 18px;
+    color: #172033;
+  }
+
+  .sidebar-logo span {
+    color: #94a3b8;
+    font-size: 11px;
+  }
+
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+
+  .nav-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 12px 14px;
+
+    border-radius: 11px;
+
+    background: transparent;
+
+    color: #64748b;
+
+    text-align: left;
+
+    transition: 0.2s;
+  }
+
+
+  .nav-item:hover {
+    background: #f5f5ff;
+    color: #5b5be8;
+  }
+
+
+  .nav-item.active {
+    background: #ededff;
+    color: #5050d5;
+
+    font-weight: 600;
+  }
+
+
+  .nav-icon {
+    width: 22px;
+
+    font-size: 18px;
+
+    text-align: center;
+  }
+
+
+  .sidebar-footer {
+    margin-top: auto;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background: #f6f6ff;
+  }
+
+  .sidebar-footer p {
+    color: #4c4cd5;
+
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .sidebar-footer span {
+    color: #94a3b8;
+    font-size: 11px;
+  }
+
+
+  .mobile-nav {
+    display: none;
+  }
+
+
+  .main-content {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 40px;
+  }
+
+
+  .header {
+    padding: 0 40px;
+  }
+
+
+  .welcome-section h2 {
+    font-size: 32px;
+  }
+
+}
+
+
+/* ============================= */
+/* MONITORES GRANDES             */
+/* ============================= */
+
+@media (min-width: 1200px) {
+
+  .app-layout {
+    grid-template-columns: 270px 1fr;
+  }
+
+  .main-content {
+    padding: 45px 55px;
+  }
+
+}
