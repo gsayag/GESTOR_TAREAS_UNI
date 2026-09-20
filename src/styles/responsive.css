@@ -672,3 +672,100 @@
   }
 
 }
+
+/* ============================= */
+/* DESKTOP POLISH                */
+/* ============================= */
+
+@media (min-width: 900px) {
+
+  .main-container {
+    min-width: 0;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: 0 auto;
+  }
+
+  .header {
+    min-height: 72px;
+  }
+
+
+  /* HOME */
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+
+  /* TASKS */
+
+  .tasks-toolbar {
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+
+    max-width: 480px;
+  }
+
+  .task-card {
+    padding: 20px;
+  }
+
+
+  /* AGENDA */
+
+  .agenda-calendar {
+    padding: 26px;
+  }
+
+  .agenda-events {
+    max-width: 950px;
+  }
+
+
+  /* CATEGORIES */
+
+  .categories-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* SETTINGS */
+
+  .settings-layout {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* STATS */
+
+  .stats-main-grid {
+    grid-template-columns:
+      minmax(0, 1.2fr)
+      minmax(0, 1fr);
+  }
+
+}
+
+@media (min-width: 1200px) {
+
+  .main-content {
+    max-width: 1250px;
+  }
+
+  .categories-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+}
