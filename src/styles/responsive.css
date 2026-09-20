@@ -557,3 +557,118 @@
   }
 
 }
+
+/* ============================= */
+/* TABLET POLISH                 */
+/* ============================= */
+
+@media (min-width: 650px) and (max-width: 899px) {
+
+  .main-content {
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding:
+      32px
+      28px
+      105px;
+  }
+
+
+  /* HEADER */
+
+  .header {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+
+  /* HOME */
+
+  .welcome-section {
+    gap: 30px;
+  }
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+
+  /* TASKS */
+
+  .tasks-toolbar {
+    align-items: flex-start;
+  }
+
+  .search-box {
+    flex: 1;
+
+    max-width: none;
+  }
+
+  .task-filters {
+    flex-shrink: 0;
+  }
+
+
+  /* CATEGORIES */
+
+  .categories-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* SETTINGS */
+
+  .settings-layout {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  /* STATS */
+
+  .stats-summary {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .stats-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* AGENDA */
+
+  .agenda-calendar {
+    padding: 24px;
+  }
+
+  .agenda-days {
+    overflow-x: visible;
+  }
+
+
+  /* MOBILE NAV EN TABLET */
+
+  .mobile-nav {
+    height: 76px;
+
+    padding:
+      8px
+      20px
+      7px;
+  }
+
+  .mobile-nav-item {
+    font-size: 20px;
+  }
+
+  .mobile-nav-item small {
+    font-size: 10px;
+  }
+
+}
