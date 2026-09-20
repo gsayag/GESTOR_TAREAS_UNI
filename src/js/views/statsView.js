@@ -1,26 +1,103 @@
+import {
+  getTaskStats
+} from '../stats.js'
+
+import {
+  getCategories
+} from '../categories.js'
+
+
+function createCategoryProgress(category) {
+  return `
+    <div class="stats-category-row">
+
+      <div class="stats-category-header">
+
+        <div>
+
+          <span
+            class="stats-category-icon ${category.className}"
+          >
+            ${category.icon}
+          </span>
+
+          <div>
+
+            <strong>
+              ${category.name}
+            </strong>
+
+            <span>
+              ${category.completed}
+              de
+              ${category.total}
+              tareas
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <strong>
+          ${category.progress}%
+        </strong>
+
+      </div>
+
+
+      <div class="progress-bar">
+
+        <div
+          class="progress-value"
+          style="width: ${category.progress}%"
+        ></div>
+
+      </div>
+
+    </div>
+  `
+}
+
+
 export function statsView() {
+  const stats =
+    getTaskStats()
+
+  const categories =
+    getCategories()
+
+  const categoriesHTML =
+    categories
+      .map(createCategoryProgress)
+      .join('')
+
+
   return `
     <section class="stats-page">
 
-      <!-- ENCABEZADO -->
       <div class="page-heading">
 
         <div>
+
           <p class="page-eyebrow">
             Rendimiento
           </p>
 
-          <h2>Mi progreso</h2>
+          <h2>
+            Mi progreso
+          </h2>
 
           <p class="page-description">
-            Revisa el avance de tus actividades y tu rendimiento general.
+            Revisa el avance de tus actividades
+            y tu rendimiento general.
           </p>
+
         </div>
 
       </div>
 
 
-      <!-- TARJETAS DE RESUMEN -->
       <section class="stats-summary">
 
         <article class="stats-summary-card">
@@ -30,9 +107,19 @@ export function statsView() {
           </div>
 
           <div>
-            <span>Completadas</span>
-            <strong>9</strong>
-            <p>de 14 tareas</p>
+
+            <span>
+              Completadas
+            </span>
+
+            <strong>
+              ${stats.completed}
+            </strong>
+
+            <p>
+              de ${stats.total} tareas
+            </p>
+
           </div>
 
         </article>
@@ -45,9 +132,19 @@ export function statsView() {
           </div>
 
           <div>
-            <span>Pendientes</span>
-            <strong>5</strong>
-            <p>actividades por terminar</p>
+
+            <span>
+              Pendientes
+            </span>
+
+            <strong>
+              ${stats.pending}
+            </strong>
+
+            <p>
+              actividades por terminar
+            </p>
+
           </div>
 
         </article>
@@ -60,9 +157,19 @@ export function statsView() {
           </div>
 
           <div>
-            <span>Vencidas</span>
-            <strong>1</strong>
-            <p>requiere atención</p>
+
+            <span>
+              Vencidas
+            </span>
+
+            <strong>
+              ${stats.overdue}
+            </strong>
+
+            <p>
+              requieren atención
+            </p>
+
           </div>
 
         </article>
@@ -70,21 +177,26 @@ export function statsView() {
       </section>
 
 
-      <!-- BLOQUE PRINCIPAL -->
       <section class="stats-main-grid">
 
 
-        <!-- PROGRESO GENERAL -->
-        <article class="stats-panel general-progress-panel">
+        <article
+          class="stats-panel general-progress-panel"
+        >
 
           <div class="stats-panel-header">
 
             <div>
-              <h3>Progreso general</h3>
+
+              <h3>
+                Progreso general
+              </h3>
 
               <p>
-                Actividades completadas hasta el momento.
+                Actividades completadas hasta
+                el momento.
               </p>
+
             </div>
 
           </div>
@@ -92,11 +204,25 @@ export function statsView() {
 
           <div class="general-progress-content">
 
-            <div class="progress-circle">
+            <div
+              class="progress-circle"
+              style="
+                background:
+                  conic-gradient(
+                    #5b5be8 0%
+                    ${stats.progress}%,
+                    #edf0f5
+                    ${stats.progress}%
+                    100%
+                  );
+              "
+            >
 
               <div class="progress-circle-inner">
 
-                <strong>64%</strong>
+                <strong>
+                  ${stats.progress}%
+                </strong>
 
                 <span>
                   Completado
@@ -112,11 +238,16 @@ export function statsView() {
               <div class="progress-info-row">
 
                 <div>
-                  <span class="status-dot completed"></span>
+                  <span
+                    class="status-dot completed"
+                  ></span>
+
                   Completadas
                 </div>
 
-                <strong>9</strong>
+                <strong>
+                  ${stats.completed}
+                </strong>
 
               </div>
 
@@ -124,11 +255,16 @@ export function statsView() {
               <div class="progress-info-row">
 
                 <div>
-                  <span class="status-dot pending"></span>
+                  <span
+                    class="status-dot pending"
+                  ></span>
+
                   Pendientes
                 </div>
 
-                <strong>5</strong>
+                <strong>
+                  ${stats.pending}
+                </strong>
 
               </div>
 
@@ -136,11 +272,16 @@ export function statsView() {
               <div class="progress-info-row">
 
                 <div>
-                  <span class="status-dot overdue"></span>
+                  <span
+                    class="status-dot overdue"
+                  ></span>
+
                   Vencidas
                 </div>
 
-                <strong>1</strong>
+                <strong>
+                  ${stats.overdue}
+                </strong>
 
               </div>
 
@@ -151,17 +292,20 @@ export function statsView() {
         </article>
 
 
-        <!-- RESUMEN SEMANAL -->
         <article class="stats-panel">
 
           <div class="stats-panel-header">
 
             <div>
-              <h3>Esta semana</h3>
+
+              <h3>
+                Resumen actual
+              </h3>
 
               <p>
-                Resumen de tus actividades recientes.
+                Estado general de tus actividades.
               </p>
+
             </div>
 
           </div>
@@ -172,11 +316,11 @@ export function statsView() {
             <div class="weekly-stat">
 
               <span>
-                Tareas creadas
+                Total de tareas
               </span>
 
               <strong>
-                6
+                ${stats.total}
               </strong>
 
             </div>
@@ -185,11 +329,11 @@ export function statsView() {
             <div class="weekly-stat">
 
               <span>
-                Tareas completadas
+                Prioridad alta
               </span>
 
               <strong>
-                4
+                ${stats.highPriority}
               </strong>
 
             </div>
@@ -198,11 +342,11 @@ export function statsView() {
             <div class="weekly-stat">
 
               <span>
-                Cumplimiento
+                Para hoy
               </span>
 
               <strong>
-                67%
+                ${stats.dueToday}
               </strong>
 
             </div>
@@ -219,11 +363,12 @@ export function statsView() {
             <div>
 
               <strong>
-                Buen progreso
+                ${stats.progress}% completado
               </strong>
 
               <p>
-                Completaste más de la mitad de tus tareas de esta semana.
+                Continúa organizando tus actividades
+                para avanzar con tus pendientes.
               </p>
 
             </div>
@@ -235,8 +380,9 @@ export function statsView() {
       </section>
 
 
-      <!-- PROGRESO POR CATEGORÍA -->
-      <section class="stats-panel category-progress-panel">
+      <section
+        class="stats-panel category-progress-panel"
+      >
 
         <div class="stats-panel-header">
 
@@ -247,7 +393,8 @@ export function statsView() {
             </h3>
 
             <p>
-              Revisa el avance individual de cada área.
+              Revisa el avance individual
+              de cada área.
             </p>
 
           </div>
@@ -257,205 +404,7 @@ export function statsView() {
 
         <div class="category-progress-list">
 
-
-          <!-- DESARROLLO WEB -->
-          <div class="stats-category-row">
-
-            <div class="stats-category-header">
-
-              <div>
-                <span class="stats-category-icon development">
-                  &lt;/&gt;
-                </span>
-
-                <div>
-                  <strong>
-                    Desarrollo Web
-                  </strong>
-
-                  <span>
-                    2 de 3 tareas
-                  </span>
-                </div>
-              </div>
-
-              <strong>
-                67%
-              </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-value"
-                style="width: 67%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <!-- PROGRAMACIÓN -->
-          <div class="stats-category-row">
-
-            <div class="stats-category-header">
-
-              <div>
-                <span class="stats-category-icon programming">
-                  { }
-                </span>
-
-                <div>
-                  <strong>
-                    Programación
-                  </strong>
-
-                  <span>
-                    3 de 4 tareas
-                  </span>
-                </div>
-              </div>
-
-              <strong>
-                75%
-              </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-value"
-                style="width: 75%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <!-- MATEMÁTICA -->
-          <div class="stats-category-row">
-
-            <div class="stats-category-header">
-
-              <div>
-                <span class="stats-category-icon mathematics">
-                  ∑
-                </span>
-
-                <div>
-                  <strong>
-                    Matemática
-                  </strong>
-
-                  <span>
-                    1 de 2 tareas
-                  </span>
-                </div>
-              </div>
-
-              <strong>
-                50%
-              </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-value"
-                style="width: 50%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <!-- UNIVERSIDAD -->
-          <div class="stats-category-row">
-
-            <div class="stats-category-header">
-
-              <div>
-                <span class="stats-category-icon university">
-                  U
-                </span>
-
-                <div>
-                  <strong>
-                    Universidad
-                  </strong>
-
-                  <span>
-                    1 de 3 tareas
-                  </span>
-                </div>
-              </div>
-
-              <strong>
-                33%
-              </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-value"
-                style="width: 33%"
-              ></div>
-
-            </div>
-
-          </div>
-
-
-          <!-- PERSONAL -->
-          <div class="stats-category-row">
-
-            <div class="stats-category-header">
-
-              <div>
-                <span class="stats-category-icon personal">
-                  P
-                </span>
-
-                <div>
-                  <strong>
-                    Personal
-                  </strong>
-
-                  <span>
-                    2 de 2 tareas
-                  </span>
-                </div>
-              </div>
-
-              <strong>
-                100%
-              </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-              <div
-                class="progress-value"
-                style="width: 100%"
-              ></div>
-
-            </div>
-
-          </div>
+          ${categoriesHTML}
 
         </div>
 

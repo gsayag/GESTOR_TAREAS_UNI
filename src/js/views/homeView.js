@@ -1,9 +1,133 @@
+import {
+  getTaskStats,
+  getUpcomingTasks
+} from '../stats.js'
+
+
+const priorityLabels = {
+  high: 'Alta',
+  medium: 'Media',
+  low: 'Baja'
+}
+
+
+function formatDate(dateString) {
+  const [year, month, day] = dateString
+    .split('-')
+    .map(Number)
+
+  const date = new Date(
+    year,
+    month - 1,
+    day
+  )
+
+  return date.toLocaleDateString(
+    'es-PE',
+    {
+      day: 'numeric',
+      month: 'long'
+    }
+  )
+}
+
+
+function getCurrentDateLabel() {
+  const date = new Date()
+
+  return date.toLocaleDateString(
+    'es-PE',
+    {
+      day: 'numeric',
+      month: 'long'
+    }
+  )
+}
+
+
+function createUpcomingTaskCard(task) {
+  return `
+    <article class="task-card">
+
+      <div class="task-main">
+
+        <div class="task-check"></div>
+
+        <div class="task-info">
+
+          <div class="task-meta">
+
+            <span class="category-badge">
+              ${task.category}
+            </span>
+
+            <span class="priority ${task.priority}">
+              ${priorityLabels[task.priority]}
+            </span>
+
+          </div>
+
+          <h4>
+            ${task.title}
+          </h4>
+
+          <p>
+            ${task.description}
+          </p>
+
+          <span class="task-date">
+            📅 ${formatDate(task.date)}
+          </span>
+
+        </div>
+
+      </div>
+
+    </article>
+  `
+}
+
+
 export function homeView() {
+  const stats = getTaskStats()
+
+  const upcomingTasks =
+    getUpcomingTasks(3)
+
+
+  const upcomingTasksHTML =
+    upcomingTasks.length > 0
+      ? upcomingTasks
+          .map(createUpcomingTaskCard)
+          .join('')
+      : `
+        <div class="tasks-empty-state">
+
+          <div class="empty-state-icon">
+            ✓
+          </div>
+
+          <h3>
+            No tienes tareas próximas
+          </h3>
+
+          <p>
+            Cuando registres nuevas actividades
+            aparecerán aquí.
+          </p>
+
+        </div>
+      `
+
+
   return `
     <section class="welcome-section">
 
       <div>
-        <p class="welcome-label">20 de septiembre</p>
+
+        <p class="welcome-label">
+          ${getCurrentDateLabel()}
+        </p>
 
         <h2>
           Buenos días 👋
@@ -12,27 +136,26 @@ export function homeView() {
         <p>
           Organiza tus actividades y aprovecha mejor tu día.
         </p>
-      </div>
 
-      <button class="primary-button">
-        + Nueva tarea
-      </button>
+      </div>
 
     </section>
 
 
-    <!-- RESUMEN -->
     <section class="summary-grid">
 
       <article class="summary-card">
 
         <div class="summary-icon pending">
-          ✓
+          !
         </div>
 
         <div>
           <span>Pendientes</span>
-          <strong>5</strong>
+
+          <strong>
+            ${stats.pending}
+          </strong>
         </div>
 
       </article>
@@ -46,7 +169,10 @@ export function homeView() {
 
         <div>
           <span>Completadas</span>
-          <strong>3</strong>
+
+          <strong>
+            ${stats.completed}
+          </strong>
         </div>
 
       </article>
@@ -60,7 +186,10 @@ export function homeView() {
 
         <div>
           <span>Para hoy</span>
-          <strong>2</strong>
+
+          <strong>
+            ${stats.dueToday}
+          </strong>
         </div>
 
       </article>
@@ -68,143 +197,28 @@ export function homeView() {
     </section>
 
 
-    <!-- PRÓXIMAS TAREAS -->
     <section class="tasks-section">
 
       <div class="section-header">
 
         <div>
-          <h3>Próximas tareas</h3>
+
+          <h3>
+            Próximas tareas
+          </h3>
 
           <p>
             Estas son tus actividades más cercanas.
           </p>
-        </div>
 
-        <button class="text-button">
-          Ver todas
-        </button>
+        </div>
 
       </div>
 
 
       <div class="task-list">
 
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <div class="task-check"></div>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Desarrollo Web
-                </span>
-
-                <span class="priority high">
-                  Alta
-                </span>
-
-              </div>
-
-              <h4>
-                Terminar proyecto web
-              </h4>
-
-              <p>
-                Completar la interfaz responsive de la aplicación.
-              </p>
-
-              <span class="task-date">
-                📅 22 de septiembre
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <div class="task-check"></div>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Matemática
-                </span>
-
-                <span class="priority medium">
-                  Media
-                </span>
-
-              </div>
-
-              <h4>
-                Resolver ejercicios
-              </h4>
-
-              <p>
-                Desarrollar los ejercicios pendientes de la semana.
-              </p>
-
-              <span class="task-date">
-                📅 24 de septiembre
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <div class="task-check"></div>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Universidad
-                </span>
-
-                <span class="priority low">
-                  Baja
-                </span>
-
-              </div>
-
-              <h4>
-                Revisar material del curso
-              </h4>
-
-              <p>
-                Repasar las diapositivas antes de la siguiente clase.
-              </p>
-
-              <span class="task-date">
-                📅 26 de septiembre
-              </span>
-
-            </div>
-
-          </div>
-
-        </article>
+        ${upcomingTasksHTML}
 
       </div>
 

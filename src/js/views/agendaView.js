@@ -1,366 +1,315 @@
+import {
+  getPendingTasksSorted
+} from '../stats.js'
+
+
+const priorityLabels = {
+  high: 'Alta',
+  medium: 'Media',
+  low: 'Baja'
+}
+
+
+function getDateKey(date) {
+  const year = date.getFullYear()
+
+  const month = String(
+    date.getMonth() + 1
+  ).padStart(2, '0')
+
+  const day = String(
+    date.getDate()
+  ).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
+
+function parseTaskDate(dateString) {
+  const [year, month, day] =
+    dateString.split('-').map(Number)
+
+  return new Date(
+    year,
+    month - 1,
+    day
+  )
+}
+
+
+function capitalize(text) {
+  return (
+    text.charAt(0).toUpperCase() +
+    text.slice(1)
+  )
+}
+
+
+function createCalendarDays(tasks) {
+  const today = new Date()
+
+  const days = []
+
+
+  for (let index = 0; index < 7; index++) {
+    const date = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + index
+    )
+
+    const dateKey = getDateKey(date)
+
+    const hasTask = tasks.some(
+      (task) => task.date === dateKey
+    )
+
+    const dayName = capitalize(
+      date
+        .toLocaleDateString(
+          'es-PE',
+          {
+            weekday: 'short'
+          }
+        )
+        .replace('.', '')
+    )
+
+
+    days.push(`
+      <button
+        class="agenda-day
+        ${index === 0 ? 'active' : ''}
+        ${hasTask ? 'has-task' : ''}"
+        type="button"
+      >
+        <span>
+          ${dayName}
+        </span>
+
+        <strong>
+          ${date.getDate()}
+        </strong>
+
+      </button>
+    `)
+  }
+
+
+  return days.join('')
+}
+
+
+function createAgendaGroups(tasks) {
+  if (tasks.length === 0) {
+    return `
+      <div class="tasks-empty-state">
+
+        <div class="empty-state-icon">
+          📅
+        </div>
+
+        <h3>
+          No tienes actividades pendientes
+        </h3>
+
+        <p>
+          Las próximas tareas aparecerán
+          automáticamente en tu agenda.
+        </p>
+
+      </div>
+    `
+  }
+
+
+  const groups = {}
+
+
+  tasks.forEach((task) => {
+    if (!groups[task.date]) {
+      groups[task.date] = []
+    }
+
+    groups[task.date].push(task)
+  })
+
+
+  return Object.entries(groups)
+    .map(([date, dateTasks]) => {
+
+      const parsedDate =
+        parseTaskDate(date)
+
+      const formattedDate =
+        capitalize(
+          parsedDate.toLocaleDateString(
+            'es-PE',
+            {
+              weekday: 'long',
+              day: 'numeric',
+              month: 'long'
+            }
+          )
+        )
+
+
+      const eventsHTML = dateTasks
+        .map((task) => {
+          return `
+            <article class="agenda-event">
+
+              <div class="agenda-event-time">
+                Tarea
+              </div>
+
+              <div class="agenda-event-line"></div>
+
+              <div class="agenda-event-card">
+
+                <div class="task-meta">
+
+                  <span class="category-badge">
+                    ${task.category}
+                  </span>
+
+                  <span class="priority ${task.priority}">
+                    ${priorityLabels[task.priority]}
+                  </span>
+
+                </div>
+
+                <h4>
+                  ${task.title}
+                </h4>
+
+                <p>
+                  ${task.description}
+                </p>
+
+              </div>
+
+            </article>
+          `
+        })
+        .join('')
+
+
+      return `
+        <div class="agenda-group">
+
+          <div class="agenda-date">
+
+            <span class="agenda-date-day">
+              ${formattedDate}
+            </span>
+
+          </div>
+
+          <div class="agenda-events">
+            ${eventsHTML}
+          </div>
+
+        </div>
+      `
+    })
+    .join('')
+}
+
+
 export function agendaView() {
+  const tasks =
+    getPendingTasksSorted()
+
+  const today =
+    new Date()
+
+  const monthLabel =
+    capitalize(
+      today.toLocaleDateString(
+        'es-PE',
+        {
+          month: 'long',
+          year: 'numeric'
+        }
+      )
+    )
+
+
   return `
     <section class="agenda-page">
 
-      <!-- ENCABEZADO -->
       <div class="page-heading">
 
         <div>
+
           <p class="page-eyebrow">
             Planificación
           </p>
 
-          <h2>Mi agenda</h2>
+          <h2>
+            Mi agenda
+          </h2>
 
           <p class="page-description">
-            Consulta tus próximas actividades organizadas por fecha.
+            Consulta tus próximas actividades
+            organizadas por fecha.
           </p>
+
         </div>
 
       </div>
 
 
-      <!-- MES -->
       <section class="agenda-calendar">
 
         <div class="agenda-calendar-header">
 
           <div>
+
             <span class="agenda-month-label">
               Calendario
             </span>
 
-            <h3>Septiembre 2026</h3>
-          </div>
+            <h3>
+              ${monthLabel}
+            </h3>
 
-          <button
-            class="agenda-today-button"
-            type="button"
-          >
-            Hoy
-          </button>
+          </div>
 
         </div>
 
 
-        <!-- DÍAS -->
         <div class="agenda-days">
 
-          <button class="agenda-day active">
-            <span>Dom</span>
-            <strong>20</strong>
-          </button>
-
-          <button class="agenda-day">
-            <span>Lun</span>
-            <strong>21</strong>
-          </button>
-
-          <button class="agenda-day has-task">
-            <span>Mar</span>
-            <strong>22</strong>
-          </button>
-
-          <button class="agenda-day">
-            <span>Mié</span>
-            <strong>23</strong>
-          </button>
-
-          <button class="agenda-day has-task">
-            <span>Jue</span>
-            <strong>24</strong>
-          </button>
-
-          <button class="agenda-day">
-            <span>Vie</span>
-            <strong>25</strong>
-          </button>
-
-          <button class="agenda-day has-task">
-            <span>Sáb</span>
-            <strong>26</strong>
-          </button>
+          ${createCalendarDays(tasks)}
 
         </div>
 
       </section>
 
 
-      <!-- ACTIVIDADES -->
       <section class="agenda-content">
 
         <div class="agenda-section-header">
+
           <div>
-            <h3>Próximas actividades</h3>
+
+            <h3>
+              Próximas actividades
+            </h3>
 
             <p>
-              Tus tareas ordenadas cronológicamente.
+              Tus tareas pendientes ordenadas
+              cronológicamente.
             </p>
-          </div>
-        </div>
-
-
-        <!-- HOY -->
-        <div class="agenda-group">
-
-          <div class="agenda-date">
-
-            <span class="agenda-date-day">
-              Hoy
-            </span>
-
-            <span>
-              20 de septiembre
-            </span>
-
-          </div>
-
-
-          <div class="agenda-events">
-
-            <article class="agenda-event">
-
-              <div class="agenda-event-time">
-                09:00
-              </div>
-
-              <div class="agenda-event-line"></div>
-
-              <div class="agenda-event-card">
-
-                <div class="task-meta">
-
-                  <span class="category-badge">
-                    Universidad
-                  </span>
-
-                  <span class="priority low">
-                    Baja
-                  </span>
-
-                </div>
-
-                <h4>
-                  Revisar material del curso
-                </h4>
-
-                <p>
-                  Repasar las diapositivas y organizar los apuntes.
-                </p>
-
-              </div>
-
-            </article>
-
-
-            <article class="agenda-event">
-
-              <div class="agenda-event-time">
-                16:00
-              </div>
-
-              <div class="agenda-event-line"></div>
-
-              <div class="agenda-event-card">
-
-                <div class="task-meta">
-
-                  <span class="category-badge">
-                    Desarrollo Web
-                  </span>
-
-                  <span class="priority medium">
-                    Media
-                  </span>
-
-                </div>
-
-                <h4>
-                  Avanzar proyecto Organiza+
-                </h4>
-
-                <p>
-                  Continuar con las vistas principales de la aplicación.
-                </p>
-
-              </div>
-
-            </article>
 
           </div>
 
         </div>
 
 
-        <!-- 22 SEPTIEMBRE -->
-        <div class="agenda-group">
-
-          <div class="agenda-date">
-
-            <span class="agenda-date-day">
-              Martes
-            </span>
-
-            <span>
-              22 de septiembre
-            </span>
-
-          </div>
-
-
-          <div class="agenda-events">
-
-            <article class="agenda-event">
-
-              <div class="agenda-event-time">
-                Todo el día
-              </div>
-
-              <div class="agenda-event-line"></div>
-
-              <div class="agenda-event-card">
-
-                <div class="task-meta">
-
-                  <span class="category-badge">
-                    Desarrollo Web
-                  </span>
-
-                  <span class="priority high">
-                    Alta
-                  </span>
-
-                </div>
-
-                <h4>
-                  Terminar proyecto web
-                </h4>
-
-                <p>
-                  Completar la interfaz responsive y revisar la navegación.
-                </p>
-
-              </div>
-
-            </article>
-
-          </div>
-
-        </div>
-
-
-        <!-- 24 SEPTIEMBRE -->
-        <div class="agenda-group">
-
-          <div class="agenda-date">
-
-            <span class="agenda-date-day">
-              Jueves
-            </span>
-
-            <span>
-              24 de septiembre
-            </span>
-
-          </div>
-
-
-          <div class="agenda-events">
-
-            <article class="agenda-event">
-
-              <div class="agenda-event-time">
-                18:00
-              </div>
-
-              <div class="agenda-event-line"></div>
-
-              <div class="agenda-event-card">
-
-                <div class="task-meta">
-
-                  <span class="category-badge">
-                    Matemática
-                  </span>
-
-                  <span class="priority medium">
-                    Media
-                  </span>
-
-                </div>
-
-                <h4>
-                  Resolver ejercicios
-                </h4>
-
-                <p>
-                  Completar los problemas pendientes antes de clase.
-                </p>
-
-              </div>
-
-            </article>
-
-          </div>
-
-        </div>
-
-
-        <!-- 26 SEPTIEMBRE -->
-        <div class="agenda-group">
-
-          <div class="agenda-date">
-
-            <span class="agenda-date-day">
-              Sábado
-            </span>
-
-            <span>
-              26 de septiembre
-            </span>
-
-          </div>
-
-
-          <div class="agenda-events">
-
-            <article class="agenda-event">
-
-              <div class="agenda-event-time">
-                10:00
-              </div>
-
-              <div class="agenda-event-line"></div>
-
-              <div class="agenda-event-card">
-
-                <div class="task-meta">
-
-                  <span class="category-badge">
-                    Personal
-                  </span>
-
-                  <span class="priority low">
-                    Baja
-                  </span>
-
-                </div>
-
-                <h4>
-                  Organizar actividades de la semana
-                </h4>
-
-                <p>
-                  Revisar las fechas importantes y preparar la siguiente semana.
-                </p>
-
-              </div>
-
-            </article>
-
-          </div>
-
-        </div>
+        ${createAgendaGroups(tasks)}
 
       </section>
 
