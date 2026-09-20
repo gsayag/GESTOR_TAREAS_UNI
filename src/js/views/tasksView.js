@@ -342,5 +342,227 @@ export function tasksView() {
       </div>
 
     </section>
+          <!-- MODAL NUEVA TAREA -->
+      <dialog class="task-modal" id="task-modal">
+
+        <div class="task-modal-content">
+
+          <div class="modal-header">
+
+            <div>
+              <p class="page-eyebrow">
+                Nueva actividad
+              </p>
+
+              <h2>Crear tarea</h2>
+
+              <p>
+                Agrega la información de tu nueva actividad.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              class="modal-close-button"
+              id="close-task-modal"
+              aria-label="Cerrar formulario"
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <form id="task-form" class="task-form">
+
+            <!-- TÍTULO -->
+            <div class="form-group">
+
+              <label for="task-title">
+                Título
+              </label>
+
+              <input
+                type="text"
+                id="task-title"
+                name="title"
+                placeholder="Ej. Terminar informe"
+                maxlength="80"
+                required
+              >
+
+            </div>
+
+
+            <!-- DESCRIPCIÓN -->
+            <div class="form-group">
+
+              <label for="task-description">
+                Descripción
+              </label>
+
+              <textarea
+                id="task-description"
+                name="description"
+                placeholder="Describe brevemente la actividad..."
+                rows="4"
+                maxlength="250"
+              ></textarea>
+
+            </div>
+
+
+            <!-- DOS COLUMNAS -->
+            <div class="form-row">
+
+              <div class="form-group">
+
+                <label for="task-category">
+                  Categoría
+                </label>
+
+                <select
+                  id="task-category"
+                  name="category"
+                  required
+                >
+                  <option value="">
+                    Seleccionar categoría
+                  </option>
+
+                  <option value="Desarrollo Web">
+                    Desarrollo Web
+                  </option>
+
+                  <option value="Matemática">
+                    Matemática
+                  </option>
+
+                  <option value="Programación">
+                    Programación
+                  </option>
+
+                  <option value="Universidad">
+                    Universidad
+                  </option>
+
+                  <option value="Personal">
+                    Personal
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label for="task-priority">
+                  Prioridad
+                </label>
+
+                <select
+                  id="task-priority"
+                  name="priority"
+                  required
+                >
+                  <option value="">
+                    Seleccionar prioridad
+                  </option>
+
+                  <option value="high">
+                    Alta
+                  </option>
+
+                  <option value="medium">
+                    Media
+                  </option>
+
+                  <option value="low">
+                    Baja
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <!-- FECHA -->
+            <div class="form-group">
+
+              <label for="task-date">
+                Fecha límite
+              </label>
+
+              <input
+                type="date"
+                id="task-date"
+                name="date"
+                required
+              >
+
+            </div>
+
+
+            <!-- BOTONES -->
+            <div class="form-actions">
+
+              <button
+                type="button"
+                class="secondary-button"
+                id="cancel-task-button"
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="submit"
+                class="primary-button form-submit-button"
+              >
+                Guardar tarea
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </dialog>
   `
+}
+
+
+export function initTasksView() {
+  const newTaskButton = document.querySelector('#new-task-button')
+  const modal = document.querySelector('#task-modal')
+  const closeButton = document.querySelector('#close-task-modal')
+  const cancelButton = document.querySelector('#cancel-task-button')
+  const taskForm = document.querySelector('#task-form')
+
+  if (!modal) return
+
+  newTaskButton?.addEventListener('click', () => {
+    modal.showModal()
+  })
+
+  closeButton?.addEventListener('click', () => {
+    modal.close()
+  })
+
+  cancelButton?.addEventListener('click', () => {
+    modal.close()
+  })
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.close()
+    }
+  })
+
+  taskForm?.addEventListener('submit', (event) => {
+    event.preventDefault()
+  })
 }

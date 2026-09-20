@@ -249,3 +249,28 @@
   }
 
 }
+/* ============================= */
+/* TASK FORM RESPONSIVE          */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .task-modal-content {
+    padding: 30px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .secondary-button,
+  .form-submit-button {
+    width: auto;
+  }
+
+}

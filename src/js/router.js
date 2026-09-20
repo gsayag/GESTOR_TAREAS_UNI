@@ -1,5 +1,8 @@
 import { homeView } from './views/homeView.js'
-import { tasksView } from './views/tasksView.js'
+import {
+  tasksView,
+  initTasksView
+} from './views/tasksView.js'
 import { agendaView } from './views/agendaView.js'
 import { categoriesView } from './views/categoriesView.js'
 import { statsView } from './views/statsView.js'
@@ -96,5 +99,9 @@ function renderPage(page) {
   const view = views[page]
 
   mainContent.innerHTML = view()
+
+  if (page === 'tasks') {
+    initTasksView()
+  }
 
 }
