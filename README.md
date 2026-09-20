@@ -296,51 +296,33 @@ Esto permite revisar localmente la versión generada para producción.
 
 ## 📸 Capturas de pantalla
 
-Las capturas finales de la aplicación serán incorporadas en esta sección.
-
 ### Inicio
 
-```text
-[ Captura de la vista Inicio ]
-```
+![Vista Inicio de Organiza+](./screenshots/inicio.png)
 
 ### Gestión de tareas
 
-```text
-[ Captura de la vista Tareas ]
-```
+![Vista de gestión de tareas](./screenshots/tareas.png)
 
 ### Agenda
 
-```text
-[ Captura de la vista Agenda ]
-```
+![Vista Agenda](./screenshots/agenda.png)
 
-### Categorías
+### Organiza+
 
-```text
-[ Captura de la vista Categorías ]
-```
+![Vista general de Organiza+](./screenshots/organiza.png)
 
 ### Progreso
 
-```text
-[ Captura de la vista Progreso ]
-```
+![Vista de progreso](./screenshots/progreso.png)
 
 ### Ajustes
 
-```text
-[ Captura de la vista Ajustes ]
-```
+![Vista de ajustes](./screenshots/ajustes.png)
 
-### Vista responsive
+### Vista responsive en celular
 
-```text
-[ Captura de la aplicación en celular ]
-```
-
----
+![Vista responsive móvil](./screenshots/responsive-mobile.png)
 
 ## 💾 Repositorio
 
