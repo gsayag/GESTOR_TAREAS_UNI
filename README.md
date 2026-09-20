@@ -222,6 +222,77 @@ storage.js
 se encarga de guardar y recuperar la información del navegador.
 
 ---
+## 🚀 Instalación y ejecución
+
+Para ejecutar el proyecto de forma local es necesario tener instalado:
+
+- Node.js
+- npm
+- Git
+
+### 1. Clonar el repositorio
+
+Ejecutar:
+
+```bash
+git clone https://github.com/gsayag/GESTOR_TAREAS_UNI.git
+```
+
+Luego ingresar a la carpeta del proyecto:
+
+```bash
+cd GESTOR_TAREAS_UNI
+```
+
+### 2. Instalar las dependencias
+
+Ejecutar:
+
+```bash
+npm install
+```
+
+Este comando instalará las dependencias necesarias definidas en `package.json`.
+
+### 3. Ejecutar el proyecto
+
+Iniciar el servidor de desarrollo con:
+
+```bash
+npm run dev
+```
+
+Vite mostrará una dirección similar a:
+
+```text
+http://localhost:5173
+```
+
+Abrir esa dirección en el navegador.
+
+### 4. Generar versión de producción
+
+Para generar una versión optimizada del proyecto:
+
+```bash
+npm run build
+```
+
+Los archivos finales se generarán dentro de:
+
+```text
+dist/
+```
+
+### 5. Previsualizar la versión de producción
+
+Opcionalmente, se puede ejecutar:
+
+```bash
+npm run preview
+```
+
+Esto permite revisar localmente la versión generada para producción.
 
 ## 📸 Capturas de pantalla
 
