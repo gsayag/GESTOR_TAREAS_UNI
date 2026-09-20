@@ -206,3 +206,46 @@
   }
 
 }
+/* ============================= */
+/* TASKS RESPONSIVE              */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .page-heading {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tasks-add-button {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .tasks-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .search-box {
+    max-width: 420px;
+  }
+
+  .task-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}
+
+
+@media (min-width: 900px) {
+
+  .page-heading h2 {
+    font-size: 30px;
+  }
+
+}
