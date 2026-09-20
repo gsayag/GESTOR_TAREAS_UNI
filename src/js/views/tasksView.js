@@ -1,4 +1,7 @@
-import { getTasks } from '../tasks.js'
+import {
+  getTasks,
+  addTask
+} from '../tasks.js'
 
 function getPriorityLabel(priority) {
   const labels = {
@@ -337,12 +340,16 @@ export function initTasksView() {
   })
 
   closeButton?.addEventListener('click', () => {
-    modal.close()
-  })
+  taskForm?.reset()
+
+  modal.close()
+})
 
   cancelButton?.addEventListener('click', () => {
-    modal.close()
-  })
+  taskForm?.reset()
+
+  modal.close()
+})
 
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
@@ -351,9 +358,30 @@ export function initTasksView() {
   })
 
   taskForm?.addEventListener('submit', (event) => {
-    event.preventDefault()
-  })
+  event.preventDefault()
+
+  const formData = new FormData(taskForm)
+
+  const taskData = {
+    title: formData.get('title').trim(),
+    description: formData.get('description').trim(),
+    category: formData.get('category'),
+    priority: formData.get('priority'),
+    date: formData.get('date')
+  }
+
+  addTask(taskData)
+
+  refreshTasksView()
+
+  taskForm.reset()
+
+  modal.close()
+})
 }
+
+
+
 function createTaskCard(task) {
   const completedClass = task.completed
     ? 'completed-task'
@@ -472,5 +500,60 @@ function getTaskCounters(tasks) {
     total: tasks.length,
     completed,
     pending
+  }
+}
+
+function refreshTasksView() {
+  const tasks = getTasks()
+
+  const counters = getTaskCounters(tasks)
+
+  const taskList = document.querySelector('.task-list')
+
+  const totalCounter = document.querySelector(
+    '[data-filter="all"] span'
+  )
+
+  const pendingCounter = document.querySelector(
+    '[data-filter="pending"] span'
+  )
+
+  const completedCounter = document.querySelector(
+    '[data-filter="completed"] span'
+  )
+
+  const resultsText = document.querySelector(
+    '.tasks-results-header p'
+  )
+
+
+  if (taskList) {
+    taskList.innerHTML = createTasksList(tasks)
+  }
+
+
+  if (totalCounter) {
+    totalCounter.textContent = counters.total
+  }
+
+
+  if (pendingCounter) {
+    pendingCounter.textContent = counters.pending
+  }
+
+
+  if (completedCounter) {
+    completedCounter.textContent = counters.completed
+  }
+
+
+  if (resultsText) {
+    const label =
+      counters.total === 1
+        ? 'actividad registrada'
+        : 'actividades registradas'
+
+    resultsText.textContent =
+      `${counters.total} ${label}`
   }
 }

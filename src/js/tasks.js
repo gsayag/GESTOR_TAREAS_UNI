@@ -48,3 +48,19 @@ const tasks = [
 export function getTasks() {
   return tasks
 }
+
+export function addTask(taskData) {
+  const newTask = {
+    id: Date.now(),
+    title: taskData.title,
+    description: taskData.description,
+    category: taskData.category,
+    priority: taskData.priority,
+    date: taskData.date,
+    completed: false
+  }
+
+  tasks.unshift(newTask)
+
+  return newTask
+}
