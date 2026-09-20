@@ -76,3 +76,25 @@ export function toggleTaskCompleted(taskId) {
 
   return task
 }
+
+
+export function getTaskById(taskId) {
+  return tasks.find(
+    (task) => task.id === taskId
+  )
+}
+
+
+export function updateTask(taskId, taskData) {
+  const task = getTaskById(taskId)
+
+  if (!task) return null
+
+  task.title = taskData.title
+  task.description = taskData.description
+  task.category = taskData.category
+  task.priority = taskData.priority
+  task.date = taskData.date
+
+  return task
+}

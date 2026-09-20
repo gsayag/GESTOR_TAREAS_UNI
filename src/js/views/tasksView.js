@@ -1,8 +1,12 @@
 import {
   getTasks,
   addTask,
-  toggleTaskCompleted
+  toggleTaskCompleted,
+  getTaskById,
+  updateTask
 } from '../tasks.js'
+
+let editingTaskId = null
 
 function getPriorityLabel(priority) {
   const labels = {
@@ -142,13 +146,16 @@ export function tasksView() {
           <div class="modal-header">
 
             <div>
-              <p class="page-eyebrow">
-                Nueva actividad
-              </p>
+              <p
+              class="page-eyebrow"
+              id="task-modal-eyebrow"
+            >
+              Nueva actividad
+            </p>
 
-              <h2>Crear tarea</h2>
-
-              <p>
+            <h2 id="task-modal-title">
+              Crear tarea
+            </h2>
                 Agrega la información de tu nueva actividad.
               </p>
             </div>
@@ -312,6 +319,7 @@ export function tasksView() {
               <button
                 type="submit"
                 class="primary-button form-submit-button"
+                id="task-submit-button"
               >
                 Guardar tarea
               </button>
@@ -326,23 +334,139 @@ export function tasksView() {
   `
 }
 
+function resetTaskFormMode() {
+  editingTaskId = null
+
+  const taskForm = document.querySelector('#task-form')
+  const modalEyebrow = document.querySelector(
+    '#task-modal-eyebrow'
+  )
+  const modalTitle = document.querySelector(
+    '#task-modal-title'
+  )
+  const submitButton = document.querySelector(
+    '#task-submit-button'
+  )
+
+  taskForm?.reset()
+
+  if (modalEyebrow) {
+    modalEyebrow.textContent = 'Nueva actividad'
+  }
+
+  if (modalTitle) {
+    modalTitle.textContent = 'Crear tarea'
+  }
+
+  if (submitButton) {
+    submitButton.textContent = 'Guardar tarea'
+  }
+}
+
+function openEditTaskModal(taskId, modal) {
+  const task = getTaskById(taskId)
+
+  if (!task) return
+
+  editingTaskId = taskId
+
+  const titleInput = document.querySelector('#task-title')
+  const descriptionInput = document.querySelector(
+    '#task-description'
+  )
+  const categoryInput = document.querySelector(
+    '#task-category'
+  )
+  const priorityInput = document.querySelector(
+    '#task-priority'
+  )
+  const dateInput = document.querySelector('#task-date')
+
+  const modalEyebrow = document.querySelector(
+    '#task-modal-eyebrow'
+  )
+  const modalTitle = document.querySelector(
+    '#task-modal-title'
+  )
+  const submitButton = document.querySelector(
+    '#task-submit-button'
+  )
+
+
+  if (titleInput) {
+    titleInput.value = task.title
+  }
+
+  if (descriptionInput) {
+    descriptionInput.value = task.description
+  }
+
+  if (categoryInput) {
+    categoryInput.value = task.category
+  }
+
+  if (priorityInput) {
+    priorityInput.value = task.priority
+  }
+
+  if (dateInput) {
+    dateInput.value = task.date
+  }
+
+
+  if (modalEyebrow) {
+    modalEyebrow.textContent = 'Editar actividad'
+  }
+
+  if (modalTitle) {
+    modalTitle.textContent = 'Editar tarea'
+  }
+
+  if (submitButton) {
+    submitButton.textContent = 'Guardar cambios'
+  }
+
+
+  modal.showModal()
+}
+
 
 export function initTasksView() {
-  const newTaskButton = document.querySelector('#new-task-button')
-  const modal = document.querySelector('#task-modal')
-  const closeButton = document.querySelector('#close-task-modal')
-  const cancelButton = document.querySelector('#cancel-task-button')
-  const taskForm = document.querySelector('#task-form')
-  const taskList = document.querySelector('.task-list')
+  const newTaskButton = document.querySelector(
+    '#new-task-button'
+  )
+
+  const modal = document.querySelector(
+    '#task-modal'
+  )
+
+  const closeButton = document.querySelector(
+    '#close-task-modal'
+  )
+
+  const cancelButton = document.querySelector(
+    '#cancel-task-button'
+  )
+
+  const taskForm = document.querySelector(
+    '#task-form'
+  )
+
+  const taskList = document.querySelector(
+    '.task-list'
+  )
+
 
   if (!modal) return
 
 
   // =============================
-  // ABRIR MODAL
+  // NUEVA TAREA
   // =============================
 
   newTaskButton?.addEventListener('click', () => {
+    resetTaskFormMode()
+
     modal.showModal()
   })
 
@@ -352,30 +476,30 @@ export function initTasksView() {
   // =============================
 
   closeButton?.addEventListener('click', () => {
-    taskForm?.reset()
+    resetTaskFormMode()
 
     modal.close()
   })
 
 
   // =============================
-  // CERRAR CON CANCELAR
+  // CANCELAR
   // =============================
 
   cancelButton?.addEventListener('click', () => {
-    taskForm?.reset()
+    resetTaskFormMode()
 
     modal.close()
   })
 
 
   // =============================
-  // CERRAR HACIENDO CLIC FUERA
+  // CLIC FUERA DEL MODAL
   // =============================
 
   modal.addEventListener('click', (event) => {
     if (event.target === modal) {
-      taskForm?.reset()
+      resetTaskFormMode()
 
       modal.close()
     }
@@ -400,17 +524,28 @@ export function initTasksView() {
     )
 
 
-    // MARCAR COMO COMPLETADA O PENDIENTE
+    // COMPLETAR / REABRIR
     if (action === 'toggle') {
       toggleTaskCompleted(taskId)
 
       refreshTasksView()
+
+      return
+    }
+
+
+    // EDITAR
+    if (action === 'edit') {
+      openEditTaskModal(
+        taskId,
+        modal
+      )
     }
   })
 
 
   // =============================
-  // CREAR NUEVA TAREA
+  // GUARDAR FORMULARIO
   // =============================
 
   taskForm?.addEventListener('submit', (event) => {
@@ -418,20 +553,41 @@ export function initTasksView() {
 
     const formData = new FormData(taskForm)
 
+
     const taskData = {
       title: formData.get('title').trim(),
-      description: formData.get('description').trim(),
-      category: formData.get('category'),
-      priority: formData.get('priority'),
-      date: formData.get('date')
+
+      description:
+        formData.get('description').trim(),
+
+      category:
+        formData.get('category'),
+
+      priority:
+        formData.get('priority'),
+
+      date:
+        formData.get('date')
     }
 
 
-    addTask(taskData)
+    // EDITAR
+    if (editingTaskId !== null) {
+      updateTask(
+        editingTaskId,
+        taskData
+      )
+    }
+
+    // CREAR
+    else {
+      addTask(taskData)
+    }
+
 
     refreshTasksView()
 
-    taskForm.reset()
+    resetTaskFormMode()
 
     modal.close()
   })
