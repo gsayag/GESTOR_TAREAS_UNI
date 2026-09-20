@@ -1437,3 +1437,466 @@ button.task-check {
 
   background: #5b5be8;
 }
+/* ============================= */
+/* STATS PAGE                    */
+/* ============================= */
+
+.stats-page {
+  width: 100%;
+}
+
+
+/* ============================= */
+/* STATS SUMMARY                 */
+/* ============================= */
+
+.stats-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 14px;
+
+  margin-bottom: 28px;
+}
+
+.stats-summary-card {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+
+  box-shadow:
+    0 4px 18px rgba(25, 35, 55, 0.04);
+}
+
+.stats-summary-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 14px;
+
+  font-weight: 800;
+}
+
+.stats-summary-icon.completed {
+  background: #ddf8ec;
+  color: #169765;
+}
+
+.stats-summary-icon.pending {
+  background: #fff2d8;
+  color: #c67c00;
+}
+
+.stats-summary-icon.overdue {
+  background: #ffe7e7;
+  color: #d84444;
+}
+
+.stats-summary-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-summary-card span {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.stats-summary-card strong {
+  margin-top: 2px;
+
+  color: #172033;
+
+  font-size: 25px;
+}
+
+.stats-summary-card p {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+
+/* ============================= */
+/* MAIN STATS GRID               */
+/* ============================= */
+
+.stats-main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+
+/* ============================= */
+/* PANEL                         */
+/* ============================= */
+
+.stats-panel {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+
+  box-shadow:
+    0 4px 18px rgba(25, 35, 55, 0.04);
+}
+
+.stats-panel-header {
+  margin-bottom: 22px;
+}
+
+.stats-panel-header h3 {
+  color: #172033;
+
+  font-size: 18px;
+}
+
+.stats-panel-header p {
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* ============================= */
+/* GENERAL PROGRESS              */
+/* ============================= */
+
+.general-progress-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 28px;
+}
+
+.progress-circle {
+  width: 170px;
+  height: 170px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #5b5be8 0% 64%,
+      #edf0f5 64% 100%
+    );
+}
+
+.progress-circle-inner {
+  width: 130px;
+  height: 130px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+}
+
+.progress-circle-inner strong {
+  color: #172033;
+
+  font-size: 30px;
+}
+
+.progress-circle-inner span {
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ============================= */
+/* GENERAL INFO                  */
+/* ============================= */
+
+.general-progress-info {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 11px;
+}
+
+.progress-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #f0f2f6;
+}
+
+.progress-info-row:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.progress-info-row > div {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.progress-info-row strong {
+  color: #172033;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.status-dot.completed {
+  background: #169765;
+}
+
+.status-dot.pending {
+  background: #d98b00;
+}
+
+.status-dot.overdue {
+  background: #d84444;
+}
+
+
+/* ============================= */
+/* WEEKLY STATS                  */
+/* ============================= */
+
+.weekly-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.weekly-stat {
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #f8f9fc;
+}
+
+.weekly-stat span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.weekly-stat strong {
+  color: #172033;
+
+  font-size: 22px;
+}
+
+
+/* ============================= */
+/* WEEKLY MESSAGE                */
+/* ============================= */
+
+.weekly-message {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #f1f8f5;
+}
+
+.weekly-message > span {
+  width: 35px;
+  height: 35px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  background: #ddf8ec;
+
+  color: #169765;
+
+  font-weight: 800;
+}
+
+.weekly-message strong {
+  color: #168b5e;
+
+  font-size: 12px;
+}
+
+.weekly-message p {
+  margin-top: 2px;
+
+  color: #64748b;
+
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+
+/* ============================= */
+/* CATEGORY PROGRESS             */
+/* ============================= */
+
+.category-progress-panel {
+  margin-top: 16px;
+}
+
+.category-progress-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+}
+
+.stats-category-row {
+  width: 100%;
+}
+
+.stats-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 9px;
+}
+
+.stats-category-header > div {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+}
+
+.stats-category-header > div > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-category-header strong {
+  color: #172033;
+
+  font-size: 12px;
+}
+
+.stats-category-header span {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+.stats-category-header > strong {
+  color: #5050d5;
+
+  font-size: 12px;
+}
+
+
+/* ============================= */
+/* CATEGORY ICONS                */
+/* ============================= */
+
+.stats-category-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.stats-category-icon.development {
+  background: #e9e8ff;
+  color: #5b5be8;
+}
+
+.stats-category-icon.programming {
+  background: #ddf8ec;
+  color: #168b5e;
+}
+
+.stats-category-icon.mathematics {
+  background: #fff2d8;
+  color: #c67c00;
+
+  font-size: 17px;
+}
+
+.stats-category-icon.university {
+  background: #e2f1ff;
+  color: #2978b5;
+}
+
+.stats-category-icon.personal {
+  background: #ffe7ee;
+  color: #c94c70;
+}
+

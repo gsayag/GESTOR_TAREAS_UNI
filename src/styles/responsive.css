@@ -343,3 +343,44 @@
   }
 
 }
+
+/* ============================= */
+/* STATS RESPONSIVE              */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .stats-summary {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .weekly-stats {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .general-progress-content {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .general-progress-info {
+    max-width: 250px;
+  }
+
+}
+
+
+@media (min-width: 1000px) {
+
+  .stats-main-grid {
+    grid-template-columns:
+      1.2fr 1fr;
+  }
+
+  .stats-panel {
+    padding: 24px;
+  }
+
+}
