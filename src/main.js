@@ -1,6 +1,7 @@
 import './styles/main.css'
 import './styles/components.css'
 import './styles/responsive.css'
+import { initRouter } from './js/router.js'
 
 const app = document.querySelector('#app')
 
@@ -325,4 +326,7 @@ app.innerHTML = `
     </nav>
 
   </div>
+
 `
+
+initRouter()
