@@ -274,3 +274,41 @@
   }
 
 }
+/* ============================= */
+/* AGENDA RESPONSIVE             */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .agenda-calendar {
+    padding: 24px;
+  }
+
+  .agenda-day {
+    padding: 14px 10px;
+  }
+
+  .agenda-event {
+    grid-template-columns: 80px 2px 1fr;
+
+    gap: 16px;
+  }
+
+  .agenda-event-card {
+    padding: 18px;
+  }
+
+}
+
+
+@media (min-width: 900px) {
+
+  .agenda-calendar {
+    padding: 26px;
+  }
+
+  .agenda-day strong {
+    font-size: 19px;
+  }
+
+}
