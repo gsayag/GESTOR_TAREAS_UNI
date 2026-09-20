@@ -1900,3 +1900,328 @@ button.task-check {
   color: #c94c70;
 }
 
+/* ============================= */
+/* SETTINGS PAGE                 */
+/* ============================= */
+
+.settings-page {
+  width: 100%;
+}
+
+.settings-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 16px;
+}
+
+
+/* ============================= */
+/* SETTINGS CARD                 */
+/* ============================= */
+
+.settings-card {
+  padding: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+
+  box-shadow:
+    0 4px 18px rgba(25, 35, 55, 0.04);
+}
+
+.settings-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+
+  border-bottom: 1px solid #f0f2f6;
+}
+
+.settings-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+
+  background: #ededff;
+
+  color: #5050d5;
+
+  font-weight: 800;
+}
+
+.settings-card-header h3 {
+  color: #172033;
+
+  font-size: 16px;
+}
+
+.settings-card-header p {
+  margin-top: 3px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+}
+
+
+/* ============================= */
+/* SETTINGS FORM                 */
+/* ============================= */
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* ============================= */
+/* SETTING OPTION                */
+/* ============================= */
+
+.setting-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #f0f2f6;
+}
+
+.setting-option:last-child {
+  border-bottom: none;
+}
+
+.setting-option strong {
+  display: block;
+
+  color: #334155;
+
+  font-size: 13px;
+}
+
+.setting-option p {
+  max-width: 360px;
+
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* ============================= */
+/* SWITCH                        */
+/* ============================= */
+
+.switch {
+  width: 44px;
+  height: 24px;
+
+  position: relative;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+.switch-slider {
+  position: absolute;
+
+  inset: 0;
+
+  cursor: pointer;
+
+  border-radius: 50px;
+
+  background: #d8dee8;
+
+  transition: 0.2s ease;
+}
+
+.switch-slider::before {
+  content: "";
+
+  width: 18px;
+  height: 18px;
+
+  position: absolute;
+
+  left: 3px;
+  bottom: 3px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  transition: 0.2s ease;
+}
+
+.switch input:checked + .switch-slider {
+  background: #5b5be8;
+}
+
+.switch input:checked + .switch-slider::before {
+  transform: translateX(20px);
+}
+
+
+/* ============================= */
+/* DATA INFO                     */
+/* ============================= */
+
+.data-info {
+  margin-bottom: 18px;
+
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #f8f9fc;
+}
+
+.data-info > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 7px;
+}
+
+.data-info span {
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.data-info strong {
+  color: #172033;
+
+  font-size: 11px;
+}
+
+.data-info p {
+  color: #94a3b8;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+/* ============================= */
+/* DANGER BUTTON                 */
+/* ============================= */
+
+.danger-button {
+  width: 100%;
+
+  padding: 12px 16px;
+
+  border: 1px solid #ffd0d0;
+  border-radius: 10px;
+
+  background: #fff5f5;
+
+  color: #d84444;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.danger-button:hover {
+  background: #ffeaea;
+}
+
+
+/* ============================= */
+/* ABOUT                         */
+/* ============================= */
+
+.settings-about {
+  margin-top: 18px;
+
+  padding: 18px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebedf3;
+  border-radius: 17px;
+}
+
+.settings-about > div {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.about-logo {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: #5b5be8;
+
+  color: white;
+
+  font-weight: 800;
+}
+
+.settings-about strong {
+  color: #172033;
+
+  font-size: 13px;
+}
+
+.settings-about p {
+  margin-top: 2px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+.settings-about > span {
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+

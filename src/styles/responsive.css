@@ -384,3 +384,31 @@
   }
 
 }
+
+/* ============================= */
+/* SETTINGS RESPONSIVE           */
+/* ============================= */
+
+@media (min-width: 650px) {
+
+  .settings-layout {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-about {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}
+
+
+@media (min-width: 1200px) {
+
+  .settings-card {
+    padding: 24px;
+  }
+
+}
