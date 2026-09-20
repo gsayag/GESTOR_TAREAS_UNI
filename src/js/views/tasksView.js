@@ -3,10 +3,13 @@ import {
   addTask,
   toggleTaskCompleted,
   getTaskById,
-  updateTask
+  updateTask,
+  deleteTask
 } from '../tasks.js'
 
 let editingTaskId = null
+let currentFilter = 'all'
+let currentSearch = ''
 
 function getPriorityLabel(priority) {
   const labels = {
@@ -35,6 +38,8 @@ function formatTaskDate(date) {
 }
 
 export function tasksView() {
+  currentFilter = 'all'
+  currentSearch = ''
     const tasks = getTasks()
 
     const counters = getTaskCounters(tasks)
@@ -455,9 +460,58 @@ export function initTasksView() {
   const taskList = document.querySelector(
     '.task-list'
   )
+  const searchInput = document.querySelector(
+  '#task-search'
+  )
+
+  const filterButtons = document.querySelectorAll(
+    '[data-filter]'
+  )
 
 
   if (!modal) return
+
+
+  // =============================
+  // BUSCADOR
+  // =============================
+
+  searchInput?.addEventListener('input', (event) => {
+    currentSearch =
+      event.target.value.trim()
+
+    refreshTasksView()
+  })
+
+  // =============================
+  // FILTROS
+  // =============================
+
+  filterButtons.forEach((button) => {
+
+    button.addEventListener('click', () => {
+
+      currentFilter =
+        button.dataset.filter
+
+
+      filterButtons.forEach(
+        (filterButton) => {
+
+          filterButton.classList.toggle(
+            'active',
+            filterButton === button
+          )
+
+        }
+      )
+
+
+      refreshTasksView()
+
+    })
+
+  })
 
 
   // =============================
@@ -541,7 +595,23 @@ export function initTasksView() {
         modal
       )
     }
+    if (action === 'delete') {
+      const task = getTaskById(taskId)
+
+      if (!task) return
+
+      const confirmed = window.confirm(
+        `¿Seguro que deseas eliminar la tarea "${task.title}"?`
+      )
+
+      if (!confirmed) return
+
+      deleteTask(taskId)
+
+      refreshTasksView()
+    }
   })
+  
 
 
   // =============================
@@ -697,6 +767,28 @@ function createTaskCard(task) {
 }
 
 function createTasksList(tasks) {
+  if (tasks.length === 0) {
+    return `
+      <div class="tasks-empty-state">
+
+        <div class="empty-state-icon">
+          ⌕
+        </div>
+
+        <h3>
+          No se encontraron tareas
+        </h3>
+
+        <p>
+          Prueba con otra búsqueda o selecciona
+          un filtro diferente.
+        </p>
+
+      </div>
+    `
+  }
+
+
   return tasks
     .map((task) => createTaskCard(task))
     .join('')
@@ -718,12 +810,59 @@ function getTaskCounters(tasks) {
   }
 }
 
+function getFilteredTasks(tasks) {
+  let filteredTasks = [...tasks]
+
+
+  // =============================
+  // FILTRO POR ESTADO
+  // =============================
+
+  if (currentFilter === 'pending') {
+    filteredTasks = filteredTasks.filter(
+      (task) => !task.completed
+    )
+  }
+
+
+  if (currentFilter === 'completed') {
+    filteredTasks = filteredTasks.filter(
+      (task) => task.completed
+    )
+  }
+
+
+  // =============================
+  // BÚSQUEDA
+  // =============================
+
+  if (currentSearch) {
+    const search = currentSearch.toLowerCase()
+
+    filteredTasks = filteredTasks.filter((task) => {
+      return (
+        task.title.toLowerCase().includes(search) ||
+        task.description.toLowerCase().includes(search) ||
+        task.category.toLowerCase().includes(search)
+      )
+    })
+  }
+
+
+  return filteredTasks
+}
+
 function refreshTasksView() {
   const tasks = getTasks()
 
+  const filteredTasks = getFilteredTasks(tasks)
+
   const counters = getTaskCounters(tasks)
 
-  const taskList = document.querySelector('.task-list')
+
+  const taskList = document.querySelector(
+    '.task-list'
+  )
 
   const totalCounter = document.querySelector(
     '[data-filter="all"] span'
@@ -737,38 +876,78 @@ function refreshTasksView() {
     '[data-filter="completed"] span'
   )
 
+  const resultsTitle = document.querySelector(
+    '.tasks-results-header h3'
+  )
+
   const resultsText = document.querySelector(
     '.tasks-results-header p'
   )
 
 
+  // =============================
+  // LISTA
+  // =============================
+
   if (taskList) {
-    taskList.innerHTML = createTasksList(tasks)
+    taskList.innerHTML =
+      createTasksList(filteredTasks)
   }
 
 
+  // =============================
+  // CONTADORES GENERALES
+  // =============================
+
   if (totalCounter) {
-    totalCounter.textContent = counters.total
+    totalCounter.textContent =
+      counters.total
   }
 
 
   if (pendingCounter) {
-    pendingCounter.textContent = counters.pending
+    pendingCounter.textContent =
+      counters.pending
   }
 
 
   if (completedCounter) {
-    completedCounter.textContent = counters.completed
+    completedCounter.textContent =
+      counters.completed
   }
 
 
+  // =============================
+  // TÍTULO DEL RESULTADO
+  // =============================
+
+  if (resultsTitle) {
+
+    const titles = {
+      all: 'Todas las tareas',
+      pending: 'Tareas pendientes',
+      completed: 'Tareas completadas'
+    }
+
+    resultsTitle.textContent =
+      titles[currentFilter]
+  }
+
+
+  // =============================
+  // CANTIDAD DE RESULTADOS
+  // =============================
+
   if (resultsText) {
+
+    const amount = filteredTasks.length
+
     const label =
-      counters.total === 1
-        ? 'actividad registrada'
-        : 'actividades registradas'
+      amount === 1
+        ? 'actividad encontrada'
+        : 'actividades encontradas'
 
     resultsText.textContent =
-      `${counters.total} ${label}`
+      `${amount} ${label}`
   }
 }

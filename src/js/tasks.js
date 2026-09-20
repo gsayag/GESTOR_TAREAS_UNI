@@ -98,3 +98,16 @@ export function updateTask(taskId, taskData) {
 
   return task
 }
+
+export function deleteTask(taskId) {
+  const taskIndex = tasks.findIndex(
+    (task) => task.id === taskId
+  )
+
+  if (taskIndex === -1) return false
+
+  tasks.splice(taskIndex, 1)
+
+  return true
+}
+
