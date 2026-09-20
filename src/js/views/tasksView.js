@@ -1,4 +1,37 @@
+import { getTasks } from '../tasks.js'
+
+function getPriorityLabel(priority) {
+  const labels = {
+    high: 'Alta',
+    medium: 'Media',
+    low: 'Baja'
+  }
+
+  return labels[priority] || 'Sin prioridad'
+}
+
+
+function formatTaskDate(date) {
+  const [year, month, day] = date.split('-')
+
+  const formattedDate = new Date(
+    Number(year),
+    Number(month) - 1,
+    Number(day)
+  )
+
+  return formattedDate.toLocaleDateString('es-PE', {
+    day: 'numeric',
+    month: 'long'
+  })
+}
+
 export function tasksView() {
+    const tasks = getTasks()
+
+    const counters = getTaskCounters(tasks)
+
+    const tasksHTML = createTasksList(tasks)
   return `
     <section class="tasks-page">
 
@@ -54,7 +87,7 @@ export function tasksView() {
             data-filter="all"
           >
             Todas
-            <span>4</span>
+            <span>${counters.total}</span>
           </button>
 
           <button
@@ -62,7 +95,7 @@ export function tasksView() {
             data-filter="pending"
           >
             Pendientes
-            <span>3</span>
+            <span></span>
           </button>
 
           <button
@@ -70,7 +103,7 @@ export function tasksView() {
             data-filter="completed"
           >
             Completadas
-            <span>1</span>
+            <span>${counters.completed}</span>
           </button>
 
         </div>
@@ -83,263 +116,18 @@ export function tasksView() {
 
         <div>
           <h3>Todas las tareas</h3>
-          <p>4 actividades registradas</p>
+          <p>${counters.total} actividades registradas</p>
         </div>
 
       </div>
 
 
-      <!-- LISTA -->
       <div class="task-list">
-
-
-        <!-- TAREA 1 -->
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <button
-              class="task-check"
-              aria-label="Marcar tarea como completada"
-            ></button>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Desarrollo Web
-                </span>
-
-                <span class="priority high">
-                  Alta
-                </span>
-
-              </div>
-
-              <h4>
-                Terminar proyecto web
-              </h4>
-
-              <p>
-                Completar la interfaz responsive y revisar
-                la navegación de la aplicación.
-              </p>
-
-              <div class="task-footer">
-
-                <span class="task-date">
-                  📅 22 de septiembre
-                </span>
-
-                <div class="task-actions">
-
-                  <button
-                    class="task-action-button"
-                    aria-label="Editar tarea"
-                  >
-                    Editar
-                  </button>
-
-                  <button
-                    class="task-action-button delete"
-                    aria-label="Eliminar tarea"
-                  >
-                    Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- TAREA 2 -->
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <button
-              class="task-check"
-              aria-label="Marcar tarea como completada"
-            ></button>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Matemática
-                </span>
-
-                <span class="priority medium">
-                  Media
-                </span>
-
-              </div>
-
-              <h4>
-                Resolver ejercicios
-              </h4>
-
-              <p>
-                Resolver los ejercicios pendientes antes
-                de la siguiente clase.
-              </p>
-
-              <div class="task-footer">
-
-                <span class="task-date">
-                  📅 24 de septiembre
-                </span>
-
-                <div class="task-actions">
-
-                  <button class="task-action-button">
-                    Editar
-                  </button>
-
-                  <button class="task-action-button delete">
-                    Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- TAREA 3 -->
-        <article class="task-card">
-
-          <div class="task-main">
-
-            <button
-              class="task-check"
-              aria-label="Marcar tarea como completada"
-            ></button>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Universidad
-                </span>
-
-                <span class="priority low">
-                  Baja
-                </span>
-
-              </div>
-
-              <h4>
-                Revisar material del curso
-              </h4>
-
-              <p>
-                Repasar las diapositivas y organizar
-                los apuntes de la semana.
-              </p>
-
-              <div class="task-footer">
-
-                <span class="task-date">
-                  📅 26 de septiembre
-                </span>
-
-                <div class="task-actions">
-
-                  <button class="task-action-button">
-                    Editar
-                  </button>
-
-                  <button class="task-action-button delete">
-                    Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <!-- TAREA COMPLETADA -->
-        <article class="task-card completed-task">
-
-          <div class="task-main">
-
-            <button
-              class="task-check checked"
-              aria-label="Tarea completada"
-            >
-              ✓
-            </button>
-
-            <div class="task-info">
-
-              <div class="task-meta">
-
-                <span class="category-badge">
-                  Programación
-                </span>
-
-                <span class="priority medium">
-                  Media
-                </span>
-
-              </div>
-
-              <h4>
-                Configurar proyecto Vite
-              </h4>
-
-              <p>
-                Crear el proyecto y preparar la arquitectura inicial.
-              </p>
-
-              <div class="task-footer">
-
-                <span class="task-date">
-                  ✓ Completada
-                </span>
-
-                <div class="task-actions">
-
-                  <button class="task-action-button">
-                    Editar
-                  </button>
-
-                  <button class="task-action-button delete">
-                    Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </article>
-
+        ${tasksHTML}
       </div>
+
+
+        
 
     </section>
           <!-- MODAL NUEVA TAREA -->
@@ -565,4 +353,124 @@ export function initTasksView() {
   taskForm?.addEventListener('submit', (event) => {
     event.preventDefault()
   })
+}
+function createTaskCard(task) {
+  const completedClass = task.completed
+    ? 'completed-task'
+    : ''
+
+  const checkClass = task.completed
+    ? 'task-check checked'
+    : 'task-check'
+
+  const checkContent = task.completed
+    ? '✓'
+    : ''
+
+  const dateContent = task.completed
+    ? '✓ Completada'
+    : `📅 ${formatTaskDate(task.date)}`
+
+  return `
+    <article
+      class="task-card ${completedClass}"
+      data-task-id="${task.id}"
+    >
+
+      <div class="task-main">
+
+        <button
+          class="${checkClass}"
+          aria-label="${
+            task.completed
+              ? 'Marcar tarea como pendiente'
+              : 'Marcar tarea como completada'
+          }"
+        >
+          ${checkContent}
+        </button>
+
+
+        <div class="task-info">
+
+          <div class="task-meta">
+
+            <span class="category-badge">
+              ${task.category}
+            </span>
+
+            <span class="priority ${task.priority}">
+              ${getPriorityLabel(task.priority)}
+            </span>
+
+          </div>
+
+
+          <h4>
+            ${task.title}
+          </h4>
+
+
+          <p>
+            ${task.description}
+          </p>
+
+
+          <div class="task-footer">
+
+            <span class="task-date">
+              ${dateContent}
+            </span>
+
+
+            <div class="task-actions">
+
+              <button
+                class="task-action-button"
+                data-action="edit"
+                data-task-id="${task.id}"
+              >
+                Editar
+              </button>
+
+              <button
+                class="task-action-button delete"
+                data-action="delete"
+                data-task-id="${task.id}"
+              >
+                Eliminar
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </article>
+  `
+}
+
+function createTasksList(tasks) {
+  return tasks
+    .map((task) => createTaskCard(task))
+    .join('')
+}
+
+function getTaskCounters(tasks) {
+  const completed = tasks.filter(
+    (task) => task.completed
+  ).length
+
+  const pending = tasks.filter(
+    (task) => !task.completed
+  ).length
+
+  return {
+    total: tasks.length,
+    completed,
+    pending
+  }
 }
